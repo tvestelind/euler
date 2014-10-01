@@ -19,7 +19,7 @@ build:
 	mkdir build
 
 run: all
-	$(EXEC)
+	time $(EXEC)
 
 clean:
 	rm -rf build
