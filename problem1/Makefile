@@ -1,12 +1,25 @@
 CC=ghc
+LDFLAGS=
+CCFLAGS=-hidir build
+BIN := problem1
 
-OBJECTS=main.o
+SRC := $(wildcard src/*.hs)
+OBJ := $(patsubst src/%.hs, build/%.o, $(SRC))
+EXEC := $(patsubst %, build/%, $(BIN))
 
-problem1: $(OBJECTS)
-	$(CC) -o $@ $(OBJECTS)
+all: build $(EXEC)
 
-%.o: %.hs
-	$(CC) -c -O $<
+$(EXEC): $(OBJ)
+	$(CC) $(LDFLAGS) -o $@ $^
+
+build/%.o: src/%.hs
+	$(CC) $(CCFLAGS) -c -o $@ $<
+
+build:
+	mkdir build
+
+run: all
+	$(EXEC)
 
 clean:
-	rm *.o *.hi problem1
+	rm -rf build
