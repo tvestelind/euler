@@ -1,12 +1,12 @@
-factors :: Integral a => a -> [a]
-factors n = factors' $ fermatFactor n
+primeFactors :: Integral a => a -> [a]
+primeFactors n = primeFactors' $ fermatFactor n
 
-factors' :: Integral a => (a,a) -> [a]
-factors' (1,1) = []
-factors' (a,1) = a : []
-factors' (1,b) = b : []
-factors' (a,b) = (factors' $ fermatFactor a) ++
-                 (factors' $ fermatFactor b)
+primeFactors' :: Integral a => (a,a) -> [a]
+primeFactors' (1,1) = []
+primeFactors' (a,1) = a : []
+primeFactors' (1,b) = b : []
+primeFactors' (a,b) = (primeFactors' $ fermatFactor a) ++
+                      (primeFactors' $ fermatFactor b)
 
 fermatFactor :: Integral a => a -> (a,a)
 fermatFactor n = do
@@ -28,5 +28,5 @@ isInt x = x == fromInteger (round x)
 
 main :: IO ()
 main = do
-         let s = maximum (factors 600851475143)
+         let s = maximum (primeFactors 600851475143)
          putStrLn $ "The largest prime factor of the number 600851475143 is: " ++ show s
